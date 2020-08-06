@@ -1,0 +1,52 @@
+<ActionBar class="action-bar">
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" [text]="addItemVers + ' Item'"></Label>
+    <ActionItem ios.position="right" android.position="right" (tap)="onNavItemTap('/comments')">
+        <Label [text]="'&#xf27a; ' + come.length" class="fa" style="font-size: 25" *ngIf="come.length != 0"></Label>
+        <Label [text]="'+'" class="fa" style="font-size: 25" *ngIf="!come.length"></Label>
+    </ActionItem>
+    <!--<Label class="action-bar-title" [text]="addItemVers + ' Item'" android:position="right"></Label>-->
+</ActionBar>
+
+<ScrollView orientation="vertical">
+        <StackLayout class="page page-content">
+            <Image [src]="baseImg" *ngIf="isSingleMode == false" height="250"></Image>
+            <Image [src]="imageSrc" *ngIf="isSingleMode == true" height="250" width="250" class="guided" stretch="aspectFill"></Image>
+            <Button text="Select Image" (tap)="onSelectSingleTap()" class="w btn pri" width="250"></Button>
+            <Button text="Use Camera" (tap)="useCamera()" class="w btn pri" width="250"></Button>
+            <ListPicker [items]="locationList" selectedIndex="0" (selectedIndexChange)="selectedIndexChanged($event)" width="250"></ListPicker>
+            <TextField [text]="barcode" class="inpU" hint="barcode" (textChange)="barcode=$event.object.text"></TextField>
+            <BarcodeScanner class="scanner-round" formats="QR_CODE, AZTEC, EAN_13, CODE_39, CODE_93, CODE_128, DATA_MATRIX, EAN_8, EAN_13, UPC_E, MAXICODE, RSS_14, UPC_A" beepOnScan="true" reportDuplicates="true" preferFrontCamera="false" (scanResult)="onScanResult($event)"></BarcodeScanner>
+            <Button text="Scan Barcode" (tap)="onScanTap()" class="w btn pri" width="250"></Button>
+            <TextField [text]="make" class="inpU" hint="make" (textChange)="make=$event.object.text"></TextField>
+            <TextField [text]="model" class="inpU" hint="model" (textChange)="model=$event.object.text"></TextField>
+            <ListPicker #groupL [items]="groupList" selectedIndex="0" (selectedIndexChange)="selectedIndexChanged2($event)" width="250"></ListPicker>
+            <TextView [(ngModel)]="descript" [text]="descript" (textChange)="descript=$event.object.text" class="textAr" height="100" hint="Desciption" editable="true"></TextView>
+            <Button text="Save" (tap)="onSave()" *ngIf="processing == false && addItemVers != 'Edit'" ></Button>
+            <Button text="Save Update" (tap)="onUpdate()" *ngIf="processing == false && addItemVers == 'Edit'" ></Button>
+            <ActivityIndicator busy="true" *ngIf="processing == true" isEnabled="false"></ActivityIndicator>
+        </StackLayout>
+        <!--<ListView [items]="come" (itemTap)="onItemTap($event)" row="1" column="0">
+            <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+                <StackLayout [class.odd]="odd" [class.even]="even">
+                    <GridLayout rows="*" columns="10, *, 10" style="padding-top: 10; padding-bottom: 10;">
+                        <StackLayout col="1">
+                            <Label [text]='item.v_comment' textWrap="true"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>-->
+</ScrollView>

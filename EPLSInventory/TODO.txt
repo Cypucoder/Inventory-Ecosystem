@@ -1,0 +1,35 @@
+======================================================
+==================App=================================
+======================================================
+Add Item page:
+    ~ Upload image
+    ~ Add department
+    ~ Fix update version to include an update button
+    ~ Fix description under update
+    
+Location pages:
+    ~ Tap item to view full/edit
+    
+Type page:
+
+Get server for image location and store in server.service on load
+
+======================================================
+==================Web=================================
+======================================================
+Make template to start viewing list
+    - All list
+    - Filter by location
+    - Filter by department
+    - Filter by type
+    - Filter by search
+
+======================================================
+==================Server==============================
+======================================================
+
+Add Inv:
+    ~ Check to make sure barcode doesn't exist
+    ~ Show title as department + type
+    ~ Add department to db
+    ~ Add server ip send to app and web to append to image location

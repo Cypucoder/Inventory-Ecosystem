@@ -1,0 +1,26 @@
+<ActionBar class="action-bar">
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="Add Item"></Label>
+</ActionBar>
+
+<ScrollView orientation="vertical">
+    <StackLayout class="page page-content">
+        <Image [src]="item.v_image" *ngIf="isSingleMode == true" height="250" width="250" class="guided" stretch="aspectFill"></Image>
+        <Button text="Use Camera" (tap)="useCamera()" class="w btn pri" width="250"></Button>
+        <TextField [text]="barcode" class="inpU" hint="barcode" (textChange)="barcode=$event.object.text"></TextField>
+        <TextView [(ngModel)]="descript" (textChange)="descript=$event.object.text" class="textAr" height="100" hint="Desciption"></TextView>
+        <Button text="Save" (tap)="onSave()"></Button>
+    </StackLayout>
+</ScrollView>

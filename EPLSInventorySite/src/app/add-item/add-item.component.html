@@ -1,0 +1,122 @@
+<!--<div class="col d-flex justify-content-center" style="margin-top:15px;"><input type="file" accept="image/*" (change)="onSelectFile($event)"/>
+<select (change)="ChangingValue($event)" [value]="location">
+    <option value="Central">Central</option>
+    <option value="West River">West River</option>
+    <option value="Keystone">Keystone</option>
+    <option value="South">South</option>
+</select>
+<input type="text" placeholder="Barcode" [value]="barcode" />
+<input type="text" placeholder="Make" [value]="make" />
+<input type="text" placeholder="Model" [value]="model" />
+<select (change)="ChangingValue2($event)" [value]="type">
+    <option value="Computers">Computers</option>
+    <option value="Monitors">Monitors</option>
+    <option value="Printers">Printers</option>
+    <option value="Keyboards">Keyboards</option>
+</select>
+<textarea placeholder="Description" [value]="descript"></textarea>
+<Button text="Save" (tap)="onSave()" *ngIf="processing == false && addItemVers != 'Edit'" ></Button>
+<Button text="Save Update" (tap)="onUpdate()" *ngIf="processing == false && addItemVers == 'Edit'" ></Button>
+</div>-->
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-12 col-lg-4 offset-lg-4 ">
+        <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">{{addItemVers}} Item</h5>
+        </div>
+        <div class="card-body">
+            <div class="col-12 my-3" *ngIf="imgChange == true || addItemVers == 'Edit'" style="text-align: center">
+                <img class="rounded img-fluid" src="{{img}}" style="object-fit: cover; overflow: hidden; width:200px; height: 200px;">
+            </div>
+            <div class="col-12 my-3">
+                <input type="file" accept="image/*" (change)="onSelectFile($event)"/>
+            </div>
+            <div class="col-12 my-3">
+                <select (change)="ChangingValue($event)" [value]="location">
+                    <option value="Central">Central</option>
+                    <option value="West River">West River</option>
+                    <option value="Keystone">Keystone</option>
+                    <option value="South">South</option>
+                </select>
+            </div>
+            <div class="col-12 my-3">
+                <input type="text" placeholder="Barcode" [(ngModel)]="barcode" />
+            </div>
+            <div class="col-12 my-3">
+                <input type="text" placeholder="Make" [(ngModel)]="make" />
+            </div>
+            <div class="col-12 my-3">
+                <input type="text" placeholder="Model" [(ngModel)]="model" />
+            </div>
+            <div class="col-12 my-3">
+                <select (change)="ChangingValue2($event)" [value]="type">
+                    <option value="Computers">Computers</option>
+                    <option value="Monitors">Monitors</option>
+                    <option value="Printers">Printers</option>
+                    <option value="Keyboards">Keyboards</option>
+                </select>
+            </div>
+            <div class="col-12 my-3">
+                <textarea placeholder="Description" [(ngModel)]="descript"></textarea>
+            </div>
+            <div class="col-12 my-3">
+                <Button (click)="onSave()" *ngIf="processing == false && addItemVers != 'Edit'" >Save</Button>
+            </div>
+            <div class="col-12 my-3">
+                <Button (click)="onUpdate()" *ngIf="processing == false && addItemVers == 'Edit'" >Save Update</Button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-12 col-lg-4" style="" style="overflow-y: scroll; overflow-x: hidden;" *ngIf="this.addItemVers == 'Edit'">
+        <div style="padding: 0px 20px">
+            <h1>Comments/Issues:</h1>
+            <button class="col-12" style="margin:10px 0px" *ngIf="add != true" (click)="add = true">+</button>
+            <button class="col-12" style="margin:10px 0px" *ngIf="add == true" (click)="add = false">-</button>
+            <div *ngIf="add == true">
+                <textarea class="col-12" rows="10" [(ngModel)]="com" placeholder="Type your comment or issue here"></textarea>
+                <button (click)="addComment(com)">Submit</button>
+            </div>
+            <!--<div>
+                <hr>
+                <p>The newest first and the oldest last</p>
+                <hr>
+                <p>In a way that lets you see</p>
+                <hr>
+                <p>The comments are shown </p>
+                <hr>
+                <p>This is a comment of some sort!</p>
+                <hr>
+            </div>-->
+            <div *ngFor="let x of come.slice().reverse()" (mouseenter)="x.hover = true" (mouseleave)="x.hover = false">
+                <hr>
+                <div *ngIf="x.edit != true">
+                    <span style="float:right;">
+                        <div class="badge badge-pill badge-secondary" style="margin:0px 15px">{{x.v_date | date: 'MM/dd/yyyy @ h:mma'}}</div>
+                        <i class="fa fa-ellipsis-v" style="opacity:.5; margin:5px" *ngIf="x.hover == true" (click)="x.edit = true; x.old = x.v_comment"></i>
+                    </span>
+                    {{x.v_comment}}
+                </div>
+                <div *ngIf="x.edit == true">
+                    <span style="float:right;">
+                        <div class="badge badge-pill badge-secondary" style="margin:0px 15px">{{x.v_date | date: 'MM/dd/yyyy @ h:mma'}}</div>
+                    </span>
+                    <textarea [(ngModel)]="x.v_comment" class="col-12" rows="10"></textarea>
+                    <button (click)="x.edit = false; updCom(x)" style="margin-right: 10px">Save</button>
+                    <button (click)="x.v_comment = x.old; x.edit = false" style="">Cancel</button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+
+
+    <!--<body><img /><input type="file" />
+    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Location</button>
+        <div role="menu" class="dropdown-menu"><a role="presentation" href="#" class="dropdown-item">Central</a><a role="presentation" href="#" class="dropdown-item">West River</a><a role="presentation" href="#" class="dropdown-item">South</a><a role="presentation" href="#" class="dropdown-item">Keystone</a></div>
+    </div><input type="text" placeholder="Barcode" />
+    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Type</button>
+        <div role="menu" class="dropdown-menu"><a role="presentation" href="#" class="dropdown-item">Computers</a><a role="presentation" href="#" class="dropdown-item">Monitors</a><a role="presentation" href="#" class="dropdown-item">Printers</a><a role="presentation" href="#" class="dropdown-item">Keyboards</a></div>
+    </div><input type="text" placeholder="Make" /><input type="text" placeholder="Model" /></body>-->

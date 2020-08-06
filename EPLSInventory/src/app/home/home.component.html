@@ -1,0 +1,46 @@
+<ActionBar class="action-bar">
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="View Info"></Label>
+</ActionBar>
+
+
+<GridLayout class="page page-content" rows="0, *" columns="*">
+    <StackLayout row="1" column="0">
+        <ActivityIndicator class="page-icon fa"  busy="true" *ngIf="processing==true"></ActivityIndicator>
+        <Label class="page-icon fa" text="&#xf02a;" *ngIf="processing==false"></Label>
+        <Label class="page-placeholder" text="View Item"></Label>
+        <Button [text]="btext" (tap)="onScanTap()" class="w btn pri" width="250" (isEnabled)="button"></Button>
+        <TextField [text]="barcode" (textChange)="barcode=$event.object.text" class="inpU"  hint="Enter Barcode" autocorrect="false" autocapitalizationType="none"></TextField>
+        <Button text="Find Barcode" (tap)="onCheckTap(barcode)" class="w btn pri" width="250" (isEnabled)="button"></Button>
+    </StackLayout>
+    <!--<Button [text]="category" (onTap)="choosecat()" row="0" column="0"></Button>
+    <ListView [items]="inventory" (itemTap)="onItemTap($event)" row="1" column="0">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <StackLayout [class.odd]="odd" [class.even]="even">
+                <Label text="" height="10"></Label>
+                <GridLayout rows="*" columns="10, 150, 10, 250" style="padding-top: 10">
+                    <NSImage [src]='server + item.v_image' loadMode="async" decodeWidth="400" decodeHeight="400" borderRadius="5" row="0" col="1" class="raiHImg" style="margin-bottom: 10;" minHeight="100" maxHeight="200" stretch="aspectFill"></NSImage>
+                    <StackLayout col="3">
+                        <Label [text]="item.v_barcode" textWrap="true" class="h3 w"></Label>
+                        <Label [text]='item.v_make' textWrap="true" class="eveInfo"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+        </ng-template>
+    </ListView>-->
+    <StackLayout row="1" column="0">
+        <Button text="+" class="addBtn" (tap)="onAddTap()"></Button>
+    </StackLayout>
+</GridLayout>

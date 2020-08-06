@@ -1,0 +1,46 @@
+<ActionBar class="action-bar">
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="Comments"></Label>
+    <ActionItem ios.position="right" android.position="right" style="margin-right: 150px">
+        <Label text="+" class="fa" style="font-size: 25;" *ngIf="edit != true && add != true" (tap)="onAddTap()"></Label>
+        <Label text="Back" class="fa" style="font-size: 25;" *ngIf="edit == true || add == true" (tap)="onBack()"></Label>
+    </ActionItem>
+</ActionBar>
+
+<GridLayout class="page page-content" rows="*" columns="*">
+    <!--<Button [text]="category" (onTap)="choosecat()" row="0" column="0"></Button>-->
+    <ListView [items]="come" (itemTap)="onItemTap($event)" row="0" column="0"  *ngIf="add != true && edit != true">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <StackLayout [class.odd]="odd" [class.even]="even">
+                <GridLayout rows="*" columns="10, *, 10" style="padding-top: 10; padding-bottom: 10;">
+                    <StackLayout col="1">
+                        <Label text="{{item.v_date | date:'M/d/yy @ h:mm a'}}"></Label>
+                        <Label [text]='item.v_comment' textWrap="true"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+        </ng-template>
+    </ListView>
+    <ScrollView orientation="vertical" *ngIf="add == true || edit == true">
+        <StackLayout>
+            <TextView [text]="comItem.v_comment" (textChange)="comItem.v_comment=$event.object.text" class="textAr" height="300" style="width:90%" hint="Insert/Update your comment/issue" editable="true"></TextView>
+            <Button text="Save" (tap)="onSave()" *ngIf="add == true" ></Button>
+            <Button text="Save Update" (tap)="onUpdate()" *ngIf="edit == true" ></Button>
+        </StackLayout>
+    </ScrollView>
+    <!--<StackLayout row="1" column="0">
+        <Button text="+" class="addBtn" (tap)="onAddTap()"></Button>
+    </StackLayout>-->
+</GridLayout>

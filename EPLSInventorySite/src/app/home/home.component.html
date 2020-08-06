@@ -1,0 +1,33 @@
+<select (change)="ChangingValue($event)" [value]="location">
+    <option value="All">All</option>
+    <option value="Location1">Location1</option>
+    <option value="Location2">Location2</option>
+    <option value="Location3">Location3</option>
+    <option value="Location4">Location4</option>
+    <option value="Location5">Location5</option>
+    <option value="Location6">Location6</option>
+</select>
+
+<input #box text="search" (keyup)="onSearch(box.value)" placeholder="search"/>
+<button (click)="onAdd()">Add New</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let x of inventory | filter: search">
+      <th><img [src]="url+'/assets/img/uploads/'+x.v_idItem+'.jpg'" style="max-height: 200px;max-width: 200px" (click)="onItemTap(x)"/></th>
+      <td>{{x.v_idItem}}</td>
+      <!--<td>{{x.v_image}}</td>-->
+      <td>{{x.v_location}}</td>
+      <td>{{x.v_barcode}}</td>
+      <td>{{x.v_type}}</td>
+      <td>{{x.v_descript}}</td>
+      <td>{{x.v_make}}</td>
+      <td>{{x.v_model}}</td>
+    </tr>
+  </tbody>
+</table>
